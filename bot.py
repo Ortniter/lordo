@@ -11,7 +11,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def main():
+async def main():
+    await connect_db()
     application = Application.builder().token(settings.BOT_TOKEN).build()
 
     application.add_handler(CommandHandler('start', handlers.start))
@@ -26,7 +27,7 @@ def main():
 
     application.add_handler(CallbackQueryHandler(handlers.Button()))
 
-    application.updater.start_webhook(
+    await application.updater.start_webhook(
         listen="0.0.0.0",
         port=settings.PORT,
         url_path=settings.BOT_TOKEN,
@@ -50,5 +51,4 @@ def main():
 
 
 if __name__ == '__main__':
-    run_async(connect_db())
-    main()
+    run_async(main())
