@@ -1,6 +1,6 @@
 import logging
 
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Updater
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler
 from tortoise import run_async
 
 import settings
@@ -11,56 +11,24 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-async def main():
-    await connect_db()
+def main():
+    application = Application.builder().token(settings.BOT_TOKEN).build()
 
-    # application = Application.builder().token(settings.BOT_TOKEN).build()
-    #
-    # application.add_handler(CommandHandler('start', handlers.start))
-    #
-    # application.add_handler(CommandHandler('help', handlers.help))
-    #
-    # application.add_handler(CommandHandler('books', handlers.books))
-    #
-    # application.add_handler(CommandHandler('movies', handlers.movies))
-    #
-    # application.add_handler(CommandHandler('character', handlers.character))
-    #
-    # application.add_handler(CallbackQueryHandler(handlers.Button()))
+    application.add_handler(CommandHandler('start', handlers.start))
 
-    # await application.updater.start_webhook(
-    #     listen="0.0.0.0",
-    #     port=settings.PORT,
-    #     url_path=settings.BOT_TOKEN,
-    #     webhook_url=f"https://{settings.HEROKU_APP_NAME}.herokuapp.com/{settings.BOT_TOKEN}"
-    # )
+    application.add_handler(CommandHandler('help', handlers.help))
 
-    # application.run_polling()
+    application.add_handler(CommandHandler('books', handlers.books))
 
-    # application.start_webhook(
-    #     listen="0.0.0.0",
-    #     port=settings.PORT,
-    #     url_path=settings.BOT_TOKEN
-    # )
+    application.add_handler(CommandHandler('movies', handlers.movies))
 
-    # application.start_webhook(
-    #     listen="0.0.0.0",
-    #     port=settings.PORT,
-    #     url_path=settings.BOT_TOKEN,
-    #     webhook_url=f"https://{settings.HEROKU_APP_NAME}.herokuapp.com/{settings.BOT_TOKEN}"
-    # )
+    application.add_handler(CommandHandler('character', handlers.character))
 
-    updater = Updater(settings.BOT_TOKEN, use_context=True)
-    dispatcher = updater.dispatcher
-    dispatcher.add_handler(CommandHandler('start', handlers.start))
-    await updater.start_webhook(
-        listen="0.0.0.0",
-        port=settings.PORT,
-        url_path=settings.BOT_TOKEN,
-        webhook_url=f"https://{settings.HEROKU_APP_NAME}.herokuapp.com/{settings.BOT_TOKEN}"
-    )
-    updater.idle()
+    application.add_handler(CallbackQueryHandler(handlers.Button()))
+
+    application.run_polling()
 
 
 if __name__ == '__main__':
-    run_async(main())
+    run_async(connect_db())
+    main()
