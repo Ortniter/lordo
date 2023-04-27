@@ -1,7 +1,8 @@
 from tortoise import Tortoise
 
-import settings
-
 
 async def connect_db():
-    await Tortoise.init(settings.DATABASES)
+    await Tortoise.init(
+        db_url='sqlite://db.sqlite3',
+        modules={'models': ['models']},
+    )
