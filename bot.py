@@ -26,14 +26,13 @@ def main():
 
     application.add_handler(CallbackQueryHandler(handlers.Button()))
 
-    application.run_polling()
+    # application.run_polling()
 
-    # application.start_webhook(
-    #     listen="0.0.0.0",
-    #     port=int(os.environ.get('PORT', 5000)),
-    #     url_path=telegram_bot_token,
-    #     webhook_url=telegram_bot_token
-    # )
+    application.start_webhook(
+        listen="0.0.0.0",
+        port=settings.PORT,
+        url_path=settings.BOT_TOKEN
+    )
 
 
 if __name__ == '__main__':
