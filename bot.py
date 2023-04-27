@@ -26,6 +26,13 @@ def main():
 
     application.add_handler(CallbackQueryHandler(handlers.Button()))
 
+    application.updater.start_webhook(
+        listen="0.0.0.0",
+        port=settings.PORT,
+        url_path=settings.BOT_TOKEN,
+        webhook_url=f"https://{settings.HEROKU_APP_NAME}.herokuapp.com/{settings.BOT_TOKEN}"
+    )
+
     # application.run_polling()
 
     # application.start_webhook(
@@ -34,12 +41,12 @@ def main():
     #     url_path=settings.BOT_TOKEN
     # )
 
-    application.start_webhook(
-        listen="0.0.0.0",
-        port=settings.PORT,
-        url_path=settings.BOT_TOKEN,
-        webhook_url=f"https://{settings.HEROKU_APP_NAME}.herokuapp.com/{settings.BOT_TOKEN}"
-    )
+    # application.start_webhook(
+    #     listen="0.0.0.0",
+    #     port=settings.PORT,
+    #     url_path=settings.BOT_TOKEN,
+    #     webhook_url=f"https://{settings.HEROKU_APP_NAME}.herokuapp.com/{settings.BOT_TOKEN}"
+    # )
 
 
 if __name__ == '__main__':
