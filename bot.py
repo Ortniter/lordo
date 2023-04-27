@@ -28,10 +28,17 @@ def main():
 
     # application.run_polling()
 
+    # application.start_webhook(
+    #     listen="0.0.0.0",
+    #     port=settings.PORT,
+    #     url_path=settings.BOT_TOKEN
+    # )
+
     application.start_webhook(
         listen="0.0.0.0",
         port=settings.PORT,
-        url_path=settings.BOT_TOKEN
+        url_path=settings.BOT_TOKEN,
+        webhook_url=f"https://{settings.HEROKU_APP_NAME}.herokuapp.com/{settings.BOT_TOKEN}"
     )
 
 
