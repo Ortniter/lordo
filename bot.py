@@ -6,7 +6,6 @@ from tortoise import run_async, Tortoise
 import settings
 import handlers
 from palantir import Palantir
-from database.connect_db import connect_db
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -31,7 +30,7 @@ def main():
 
 
 async def set_db():
-    await connect_db()
+    await settings.init_db()
     await Tortoise.generate_schemas()
     palantir = Palantir(
         token=settings.ONE_API_TOKEN,

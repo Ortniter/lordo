@@ -1,7 +1,6 @@
 import requests
 from tortoise import run_async
 
-from database.connect_db import connect_db
 import models
 import settings
 
@@ -104,7 +103,7 @@ class Palantir:
 
 
 async def main():
-    await connect_db()
+    await settings.init_db()
     palantir = Palantir(
         token=settings.ONE_API_TOKEN,
         base_url=settings.ONE_API_URL
